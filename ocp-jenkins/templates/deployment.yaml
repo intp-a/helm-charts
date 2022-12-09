@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ Values.jenkins.phase }}-{{ Values.jenkins.name }}-{{ Values.jenkins.version }}
+  name: {{ .Values.jenkins.phase }}-{{ .Values.jenkins.name }}-{{ .Values.jenkins.version }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ Values.jenkins.phase }}-{{ Values.jenkins.name }}
+      app: {{ .Values.jenkins.phase }}-{{ Values.jenkins.name }}
   strategy:
     type: Recreate
   template:
     metadata:
       label:
-        app: {{ Values.jenkins.phase }}-{{ Values.jenkins.name }}
+        app: {{ .Values.jenkins.phase }}-{{ .Values.jenkins.name }}
     spec:
       containers:
       - image: docker.io.jenkins/jenkins:lts-jdk11
@@ -39,10 +39,7 @@ spec:
           successThreshold: 1
           timeoutSeconds: 240
         resources:
-          limits:
-            memory: 2Gi
-          requests:
-            memory: 2Gi
+          {{ toYaml .Values.jenkins.resources | indent 4 }}
         securityContext:
           capabilities: {}
           privileged: false
@@ -64,13 +61,13 @@ spec:
       - name: jenkins-data
         {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:
-          claimName: {{ Values.jenkins.phase }}-{{ Values.jenkins.name }}-pvc
+          claimName: {{ .Values.jenkins.phase }}-{{ .Values.jenkins.name }}-pvc
         {{- else }}
         emptyDir: {}
         {{- end }}
       - configMap:
           defaultMode: 420
-          name: {{ Values.jenkins.phase }}-{{ Values.jenkins.name }}-trusted-ca-bundle
+          name: {{ .Values.jenkins.phase }}-{{ .Values.jenkins.name }}-trusted-ca-bundle
           optional: true
         name: jenkins-trusted-ca-bundle
   triggers:
