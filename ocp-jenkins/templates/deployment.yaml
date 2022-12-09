@@ -1,47 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    {{- include "openshift-jenkins.labels" . | nindent 4 }}
-  name: {{ include "openshift-jenkins.fullname" . }}
+  name: {{ Values.jenkins.phase }}-{{ Values.jenkins.name }}-{{ Values.jenkins.version }}
 spec:
   replicas: 1
   selector:
-    {{ include "openshift-jenkins.selectorLabels" . | nindent 4}}
+    matchLabels:
+      app: {{ Values.jenkins.phase }}-{{ Values.jenkins.name }}
   strategy:
     type: Recreate
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      labels:
-        {{- include "openshift-jenkins.selectorLabels" . | nindent 8 }}
+      label:
+        app: {{ Values.jenkins.phase }}-{{ Values.jenkins.name }}
     spec:
       containers:
-      - env:
-        - name: OPENSHIFT_ENABLE_OAUTH
-          value: "true"
-        - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
-          value: "true"
-        - name: DISABLE_ADMINISTRATIVE_MONITORS
-          value: "false"
-        - name: KUBERNETES_MASTER
-          value: https://kubernetes.default:443
-        - name: KUBERNETES_TRUST_CERTIFICATES
-          value: "true"
-        - name: JENKINS_SERVICE_NAME
-          value: {{ include "openshift-jenkins.fullname" . }}
-        - name: JNLP_SERVICE_NAME
-          value: {{ include "openshift-jenkins.fullname" . }}-jnlp
-        - name: ENABLE_FATAL_ERROR_LOG_FILE
-          value: "false"
-        - name: JENKINS_UC_INSECURE
-          value: "false"
-        - name: CASC_JENKINS_CONFIG
-          value: /var/lib/jenkins/proxy.yaml
-        image: ""
+      - image: docker.io.jenkins/jenkins:lts-jdk11
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 2
@@ -66,7 +40,9 @@ spec:
           timeoutSeconds: 240
         resources:
           limits:
-            memory: 1Gi
+            memory: 2Gi
+          requests:
+            memory: 2Gi
         securityContext:
           capabilities: {}
           privileged: false
@@ -88,13 +64,13 @@ spec:
       - name: jenkins-data
         {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:
-          claimName: {{ include "openshift-jenkins.fullname" . }}
+          claimName: {{ Values.jenkins.phase }}-{{ Values.jenkins.name }}-pvc
         {{- else }}
         emptyDir: {}
         {{- end }}
       - configMap:
           defaultMode: 420
-          name: {{ include "openshift-jenkins.fullname" . }}-trusted-ca-bundle
+          name: {{ Values.jenkins.phase }}-{{ Values.jenkins.name }}-trusted-ca-bundle
           optional: true
         name: jenkins-trusted-ca-bundle
   triggers:
