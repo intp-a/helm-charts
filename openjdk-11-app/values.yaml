@@ -1,6 +1,11 @@
 isOCP: false
 name: openjdk-11-app
-version: 0.0.1
+version: 0-0-1
+externalImage:
+  enabled: true
+  registry: docker.io
+  imageName: jenkins/jenkins
+  tag: latest
 
 replicaCount: 1
 

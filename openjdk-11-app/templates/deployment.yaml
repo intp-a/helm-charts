@@ -8,32 +8,32 @@ kind: Deployment
 metadata:
   labels:
     application: {{ .Release.Name }}
-    version: {{ .Values.Version }}
-  name: {{ .Release.Name }}-{{ .Values.Version }}
+    version: {{ .Values.version }}
+  name: {{ .Release.Name }}-{{ .Values.version }}
 spec:
   replicas: 1
   selector:
-    deploymentConfig: {{ .Release.Name }}-{{ .Values.Version }} 
+    matchLabels:
+      deploymentConfig: {{ .Release.Name }}-{{ .Values.version }} 
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         application: {{ .Release.Name }}
-        version: {{ .Values.Version }}
-        deploymentConfig: {{ .Release.Name }}-{{ .Values.Version }}
+        version: {{ .Values.version }}
+        deploymentConfig: {{ .Release.Name }}-{{ .Values.version }}
       name: {{ .Release.Name }}
     spec:
       containers:
       - env: []
-{{ if .Values.externalImage }}
+{{ if .Values.externalImage.enabled }}
         image: {{ .Release.Name }}
 {{ else }}
-        image: {{ .Values.externalImage }}
+        image: {{ .Values.externalImage.registry }}/{{ .Values.externalImage.imageName }}:{{ .Values.externalImage.tag }}
+{{ end }}
         imagePullPolicy: Always
         name: {{ .Release.Name }}
-        resources: 
-          {{ - with .Values.resources }}
         ports:
         - containerPort: 8778
           name: jolokia
@@ -42,15 +42,15 @@ spec:
           name: http
           protocol: TCP
       terminationGracePeriodSeconds: 75
-  triggers:
 {{ if .Values.isOCP }}
+  triggers:
   - imageChangeParams:
       automatic: true
       containerNames:
-      - "${APPLICATION_NAME}"
+      - {{ .Release.Name }}
       from:
         kind: ImageStreamTag
-        name: "${APPLICATION_NAME}:latest"
+        name: {{ .Release.Name }}:{{ .Values.version }}
     type: ImageChange
-{{ end }}
   - type: ConfigChange
+{{ end }}
