@@ -26,7 +26,8 @@ spec:
       name: {{ .Release.Name }}
     spec:
       containers:
-      - env: []
+      - env:
+        {{- toYaml .Values.env | indent 8 }}
 {{ if .Values.externalImage.enabled }}
         image: {{ .Values.externalImage.registry }}/{{ .Values.externalImage.imageName }}:{{ .Values.externalImage.tag }}
 {{ else }}

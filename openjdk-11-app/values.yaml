@@ -9,6 +9,9 @@ externalImage:
 
 replicaCount: 1
 
+env: 
+  - TZ: "Asia/Seoul"
+
 image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
