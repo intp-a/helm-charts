@@ -28,9 +28,9 @@ spec:
       containers:
       - env: []
 {{ if .Values.externalImage.enabled }}
-        image: {{ .Release.Name }}
-{{ else }}
         image: {{ .Values.externalImage.registry }}/{{ .Values.externalImage.imageName }}:{{ .Values.externalImage.tag }}
+{{ else }}
+        image: {{ .Release.Name }}
 {{ end }}
         imagePullPolicy: Always
         name: {{ .Release.Name }}
