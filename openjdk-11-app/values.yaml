@@ -8,19 +8,23 @@ externalImage:
   tag: latest
 
 replicaCount: 1
+deployStrategy: Recreate
 
 #env: 
 #  - name: TZ
 #    value: "Asia/Seoul"
 
-image:
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
-
 serviceAccount:
   name: "jenkins"
-    
+
+ports:
+  - containerPort: 8778
+    name: jolokia
+    protocol: TCP
+  - containerPort: 8080
+    name: http
+    protocol: TCP
+          
 service:
   type: ClusterIP
   port: 80
