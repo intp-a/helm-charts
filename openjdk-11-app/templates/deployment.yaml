@@ -11,12 +11,12 @@ metadata:
     version: {{ .Values.version }}
   name: {{ .Release.Name }}-{{ .Values.version }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       deploymentConfig: {{ .Release.Name }}-{{ .Values.version }} 
   strategy:
-    type: Recreate
+    type: {{ .Values.deployStrategy }}
   template:
     metadata:
       labels:
@@ -42,12 +42,7 @@ spec:
 {{ toYaml .Values.resources | indent 10 }}
 {{ end }}
         ports:
-        - containerPort: 8778
-          name: jolokia
-          protocol: TCP
-        - containerPort: 8080
-          name: http
-          protocol: TCP
+{{ toYaml .Values.ports | indent 8 }}
       terminationGracePeriodSeconds: 75
 {{ if .Values.isOCP }}
   triggers:
