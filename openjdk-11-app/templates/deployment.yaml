@@ -26,15 +26,21 @@ spec:
       name: {{ .Release.Name }}
     spec:
       containers:
-      - env:
-        {{- toYaml .Values.env | indent 8 }}
+      - name: {{ .Release.Name }}  
+{{ if .Values.env }}        
+        env:
+{{ toYaml .Values.env | indent 8 }}
+{{ end }}
 {{ if .Values.externalImage.enabled }}
         image: {{ .Values.externalImage.registry }}/{{ .Values.externalImage.imageName }}:{{ .Values.externalImage.tag }}
 {{ else }}
         image: {{ .Release.Name }}
 {{ end }}
         imagePullPolicy: Always
-        name: {{ .Release.Name }}
+{{ if .Values.resources }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+{{ end }}
         ports:
         - containerPort: 8778
           name: jolokia

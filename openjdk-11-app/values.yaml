@@ -1,6 +1,6 @@
 isOCP: false
 name: openjdk-11-app
-version: 0-0-1
+version: v0.0.1
 externalImage:
   enabled: true
   registry: docker.io
@@ -9,8 +9,9 @@ externalImage:
 
 replicaCount: 1
 
-env: 
-  - TZ: "Asia/Seoul"
+#env: 
+#  - name: TZ
+#    value: "Asia/Seoul"
 
 image:
   pullPolicy: IfNotPresent
@@ -25,12 +26,6 @@ service:
   port: 80
   targetPort: 8080
   name: web
-
-servicejnlp:
-  type: ClusterIP
-  port: 50000
-  targetPort: 50000
-  name: agent
 
 persistence:
   ## @param persistence.enabled Enable persistence using Persistent Volume Claims
@@ -52,14 +47,10 @@ persistence:
   ##
   size: 8Gi
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+resources: 
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
