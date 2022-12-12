@@ -32,6 +32,8 @@ spec:
         image: {{ .Values.externalImage }}
         imagePullPolicy: Always
         name: {{ .Release.Name }}
+        resources: 
+          {{ - with .Values.resources }}
         ports:
         - containerPort: 8778
           name: jolokia
