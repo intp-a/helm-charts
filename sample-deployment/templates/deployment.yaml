@@ -30,7 +30,7 @@ spec:
 {{- else }}
       serviceAccountName: default
 {{- end}}
-{{- if gt 0 (len .Values.persistence) }}
+{{- if gt (len .Values.persistence) 0 }}
       volumes:
   {{- range $item := .Values.persistence }}
       - name: {{ $item.volumeName }}
