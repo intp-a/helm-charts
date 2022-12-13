@@ -48,8 +48,9 @@ spec:
 {{- end }}
         ports:
 {{ toYaml .Values.ports | indent 8 }}
-{{- if eq .Values.probes.livenessProbe nil }}
+{{- if eq .Values.probes nil }}
         livenessProbe: {}
+        readinessProbe: {}
 {{- else }}
         livenessProbe:
 {{ toYaml .Values.probes.livenessProbe | indent 10 }}
