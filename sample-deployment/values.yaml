@@ -31,17 +31,21 @@ service:
   name: http
 
 persistence:
-  - volumeName: tmp
-    volumeType: hostPath
-    mountPath: /tmp
+  - volumeName: tmpHostPath
+    mountPath: /tmp/hostPath
     volumeSpec:
-      path: /tmp
-    pvcSpec:
-      storageClass:
-      annotations: {}
-      accessModes:
-        - ReadWriteOnce
-      size: 8Gi
+      hostPath:
+        path: /tmp
+  - volumeName: tmpEmptyDir
+    mountPath: /tmp/emptyDir
+    volumeSpec:
+      emptyDir: {}
+#    pvcSpec:
+#      storageClass: manual
+#      annotations: {}
+#      accessModes:
+#        - ReadWriteOnce
+#      size: 8Gi
 
 resources: 
   limits:
