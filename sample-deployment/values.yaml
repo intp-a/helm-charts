@@ -31,12 +31,12 @@ service:
   name: http
 
 persistence:
-  - volumeName: tmpHostPath
+  - volumeName: tmp-hostpath
     mountPath: /tmp/hostPath
     volumeSpec:
       hostPath:
         path: /tmp
-  - volumeName: tmpEmptyDir
+  - volumeName: tmp-emptydir
     mountPath: /tmp/emptyDir
     volumeSpec:
       emptyDir: {}

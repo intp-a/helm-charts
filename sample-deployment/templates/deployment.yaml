@@ -34,7 +34,7 @@ spec:
       volumes:
   {{- range $item := .Values.persistence }}
       - name: {{ $item.volumeName }}
-{{ toYaml $item.volumeSpec | indent 8 }}
+      {{- toYaml $item.volumeSpec | indent 8 }}
   {{- end }}
 {{- end }}
       containers:
