@@ -10,6 +10,7 @@ image:
 
 replicaCount: 1
 deployStrategy: Recreate
+terminationGracePeriodSeconds: 30
 
 #env: 
 #  - name: TZ
