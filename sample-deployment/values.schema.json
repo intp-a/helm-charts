@@ -10,7 +10,7 @@
             "type": "object",
             "properties": {
                 "externalEnabled": {
-                    "type": "boolean",
+                    "type": "boolean"
                 },
                 "pullPolicy": {
                     "type": "string",
