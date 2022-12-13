@@ -14,7 +14,8 @@ deployStrategy: Recreate
 #  - name: TZ
 #    value: "Asia/Seoul"
 
-#serviceAccount:
+serviceAccount:
+  change: false
 #  name: "jenkins"
 
 ports:

@@ -25,7 +25,7 @@ spec:
         deploymentConfig: {{ .Release.Name }}-{{ .Chart.AppVersion }}
       name: {{ .Release.Name }}
     spec:
-{{- if .Values.serviceAccount.name }}
+{{- if .Values.serviceAccount.change }}
       serviceAccountName: {{ .Values.serviceAccount.name }}
 {{- end}}
       containers:
