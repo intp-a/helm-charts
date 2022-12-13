@@ -30,6 +30,14 @@ spec:
 {{- else }}
       serviceAccountName: default
 {{- end}}
+{{- if gt 0 (len .Values.persistence) }}
+      volumes:
+  {{- range $item := .Values.persistence }}
+    - name: {{ $item.volumeName }}
+      {{ $item.volumeType }}:
+        {{ toYaml $item.volumeSpec }}
+  {{- end }}
+{{- end }}
       containers:
       - name: {{ .Release.Name }}  
 {{- if .Values.env }}        
