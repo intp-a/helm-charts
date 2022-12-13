@@ -37,7 +37,7 @@ spec:
 {{ toYaml .Values.env | indent 8 }}
 {{- end }}
 {{- if .Values.image.externalEnabled }}
-        image: {{ .Values.c.registry }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
+        image: {{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
 {{- else }}
         image: {{ .Release.Name }}
 {{- end }}
