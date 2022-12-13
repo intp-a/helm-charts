@@ -48,8 +48,9 @@ spec:
 {{- end }}
         ports:
 {{ toYaml .Values.ports | indent 8 }}
-{{- if or (not (empty .Values.probes.livenessProbe)) (.Values.probes.livenessProbe) }}
-{{ toYaml .Values.resources | indent 8 }}
+{{- if .Values.probes.livenessProbe }}
+        livenessProbe:
+{{ toYaml .Values.probes.livenessProbe | indent 10 }}
 {{- end }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
 {{- if and (.Values.isOCP) (eq .Values.image.externalEnabled "false") }}
