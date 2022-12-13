@@ -9,7 +9,6 @@ metadata:
   labels:
     app: {{ .Release.Name }}
     version: {{ .Chart.AppVersion | quote }}
-    test: {{ len .Values.persistence | quote }}
   name: "{{ .Release.Name }}-{{ .Chart.AppVersion }}"
 spec:
   replicas: {{ .Values.replicaCount }}
@@ -34,9 +33,9 @@ spec:
 {{- if gt 0 (len .Values.persistence) }}
       volumes:
   {{- range $item := .Values.persistence }}
-    - name: {{ $item.volumeName }}
-      {{ $item.volumeType }}:
-        {{ toYaml $item.volumeSpec }}
+      - name: {{ $item.volumeName }}
+        {{ $item.volumeType }}:
+          {{ toYaml $item.volumeSpec }}
   {{- end }}
 {{- end }}
       containers:
