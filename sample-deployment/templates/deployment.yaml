@@ -7,24 +7,27 @@ kind: Deployment
 {{ end }}
 metadata:
   labels:
-    application: {{ .Release.Name }}
-    version: {{ .Values.version }}
-  name: {{ .Release.Name }}-{{ .Values.version }}
+    app: {{ .Release.Name }}
+    version: {{ .Chart.Appversion }}
+  name: {{ .Release.Name }}-{{ .Chart.Appversion }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      deploymentConfig: {{ .Release.Name }}-{{ .Values.version }} 
+      deploymentConfig: {{ .Release.Name }}-{{ .Chart.Appversion }} 
   strategy:
     type: {{ .Values.deployStrategy }}
   template:
     metadata:
       labels:
-        application: {{ .Release.Name }}
-        version: {{ .Values.version }}
-        deploymentConfig: {{ .Release.Name }}-{{ .Values.version }}
+        app: {{ .Release.Name }}
+        version: {{ .Chart.Appversion }}
+        deploymentConfig: {{ .Release.Name }}-{{ .Chart.Appversion }}
       name: {{ .Release.Name }}
     spec:
+{{- if .Values.env }}
+      serviceAccountName: {{ if .Values.serviceAccount.name }}
+{{- end}}
       containers:
       - name: {{ .Release.Name }}  
 {{ if .Values.env }}        
@@ -52,7 +55,7 @@ spec:
       - {{ .Release.Name }}
       from:
         kind: ImageStreamTag
-        name: {{ .Release.Name }}:{{ .Values.version }}
+        name: {{ .Release.Name }}:{{ .Chart.Appversion }}
     type: ImageChange
   - type: ConfigChange
 {{ end }}
