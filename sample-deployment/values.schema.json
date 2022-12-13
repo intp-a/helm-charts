@@ -17,10 +17,10 @@
                     "pattern": "^(Always|Never|IfNotPresent)$"
                 },
                 "registry": {
-                    "type": "string",
+                    "type": "string"
                 },
                 "name": {
-                    "type": "string",
+                    "type": "string"
                 },
                 "tag": {
                     "type": "string"
