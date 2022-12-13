@@ -34,35 +34,6 @@
             "type": "string",
             "pattern": "^[a-z0-9-_]+$"
         },
-//        "persistence": {
-//            "type": "object",
-//            "properties": {
-//                "accessModes": {
-//                    "type": "array",
-//                    "items": {
-//                        "type": "string"
-//                    }
-//                },
-//                "annotations": {
-//                    "type": "object"
-//                },
-//                "enabled": {
-//                    "type": "boolean"
-//                },
-//                "size": {
-//                    "type": "string",
-//                    "title": "Persistent Volume Size",
-//                    "form": true,
-//                    "render": "slider",
-//                    "sliderMin": 1,
-//                    "sliderMax": 100,
-//                    "sliderUnit": "Gi"
-//                  },
-//                "storageClass": {
-//                    "type": "null"
-//                }
-//            }
-//        },
         "terminationGracePeriodSeconds": {
             "type": "integer",
             "minimum": 10
