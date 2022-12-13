@@ -47,7 +47,7 @@ spec:
         ports:
 {{ toYaml .Values.ports | indent 8 }}
       terminationGracePeriodSeconds: 75
-{{- if .Values.isOCP and .Values.externalImage.enabled eq "false" }}
+{{- if and (.Values.isOCP) (eq .Values.externalImage.enabled "false" }}
   triggers:
   - imageChangeParams:
       automatic: true
