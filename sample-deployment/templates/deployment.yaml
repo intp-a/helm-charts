@@ -48,6 +48,9 @@ spec:
 {{- end }}
         ports:
 {{ toYaml .Values.ports | indent 8 }}
+{{- if not (empty .Values.probes.livenessProbe) }}
+{{ toYaml .Values.resources | indent 8 }}
+{{- end }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
 {{- if and (.Values.isOCP) (eq .Values.image.externalEnabled "false") }}
   triggers:
