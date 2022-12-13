@@ -1,0 +1,60 @@
+isOCP: false
+name: openjdk-11-app
+version: v0.0.1
+externalImage:
+  enabled: true
+  registry: docker.io
+  imageName: jenkins/jenkins
+  tag: latest
+
+replicaCount: 1
+deployStrategy: Recreate
+
+#env: 
+#  - name: TZ
+#    value: "Asia/Seoul"
+
+serviceAccount:
+  name: "jenkins"
+
+ports:
+  - containerPort: 8778
+    name: jolokia
+    protocol: TCP
+  - containerPort: 8080
+    name: http
+    protocol: TCP
+          
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+  name: web
+
+persistence:
+  ## @param persistence.enabled Enable persistence using Persistent Volume Claims
+  enabled: false
+  ## @param persistence.storageClass Persistent Volume storage class
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner
+  ##
+  storageClass:
+  ## @param persistence.annotations Additional custom annotations for the PVC
+  ##
+  annotations: {}
+  ## @param persistence.accessModes [array] Persistent Volume access modes
+  ##
+  accessModes:
+    - ReadWriteOnce
+  ## @param persistence.size Persistent Volume size
+  ##
+  size: 8Gi
+
+resources: 
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
