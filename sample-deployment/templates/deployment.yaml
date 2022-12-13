@@ -48,11 +48,7 @@ spec:
 {{- end }}
         ports:
 {{ toYaml .Values.ports | indent 8 }}
-{{- if eq .Values.probes nil }}
-        livenessProbe: {}
-        readinessProbe: {}
-{{- else }}
-        livenessProbe:
+{{- if and (not eq .Values.probes nil) (not eq .Values.probes.livenessProbe nil) }}
 {{ toYaml .Values.probes.livenessProbe | indent 10 }}
 {{- end }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
