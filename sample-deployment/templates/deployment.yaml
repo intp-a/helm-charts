@@ -1,10 +1,10 @@
-{{ if .Values.isOCP }}
+{{- if .Values.isOCP }}
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
-{{ else }}
+{{- else }}
 apiVersion: apps/v1
 kind: Deployment
-{{ end }}
+{{- end }}
 metadata:
   labels:
     app: {{ .Release.Name }}
@@ -30,24 +30,24 @@ spec:
 {{- end}}
       containers:
       - name: {{ .Release.Name }}  
-{{ if .Values.env }}        
+{{- if .Values.env }}        
         env:
 {{ toYaml .Values.env | indent 8 }}
-{{ end }}
-{{ if .Values.externalImage.enabled }}
+{{- end }}
+{{- if .Values.externalImage.enabled }}
         image: {{ .Values.externalImage.registry }}/{{ .Values.externalImage.imageName }}:{{ .Values.externalImage.tag }}
-{{ else }}
+{{- else }}
         image: {{ .Release.Name }}
-{{ end }}
+{{- end }}
         imagePullPolicy: Always
-{{ if .Values.resources }}
+{{- if .Values.resources }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
-{{ end }}
+{{- end }}
         ports:
 {{ toYaml .Values.ports | indent 8 }}
       terminationGracePeriodSeconds: 75
-{{ if .Values.isOCP }}
+{{- if .Values.isOCP and .Values.externalImage.enabled eq "false" }}
   triggers:
   - imageChangeParams:
       automatic: true
@@ -58,4 +58,4 @@ spec:
         name: {{ .Release.Name }}:{{ .Chart.AppVersion }}
     type: ImageChange
   - type: ConfigChange
-{{ end }}
+{{- end }}

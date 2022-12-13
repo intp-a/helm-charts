@@ -14,8 +14,8 @@ deployStrategy: Recreate
 #  - name: TZ
 #    value: "Asia/Seoul"
 
-serviceAccount:
-  name: "jenkins"
+#serviceAccount:
+#  name: "jenkins"
 
 ports:
   - containerPort: 8778
