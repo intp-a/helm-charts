@@ -54,6 +54,13 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 10 }}
 {{- end }}
+{{- if gt (len .Values.persistence) 0 }}
+        volumeMounts:
+  {{- range $item := .Values.persistence }}
+        - name: {{ $item.volumeName }}
+          mountPath: {{ $item.mountPath }}
+  {{- end }}
+{{- end }}
         ports:
 {{ toYaml .Values.ports | indent 8 }}
 {{- if .Values.probes.livenessProbeEnabled }}

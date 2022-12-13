@@ -33,6 +33,7 @@ service:
 persistence:
   - volumeName: tmp
     volumeType: hostPath
+    mountPath: /tmp
     volumeSpec:
       path: /tmp
     pvcSpec:
