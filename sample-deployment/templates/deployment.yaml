@@ -27,6 +27,8 @@ spec:
     spec:
 {{- if .Values.serviceAccount.change }}
       serviceAccountName: {{ .Values.serviceAccount.name }}
+{{- else }}
+      serviceAccountName: default
 {{- end}}
       containers:
       - name: {{ .Release.Name }}  
