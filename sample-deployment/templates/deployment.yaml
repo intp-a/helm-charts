@@ -9,7 +9,7 @@ metadata:
   labels:
     app: {{ .Release.Name }}
     version: {{ .Chart.appVersion }}
-  name: {{ .Release.Name }}-{{ .Chart.appVersion }}
+  name: "{{ .Release.Name }}-{{ .Chart.appVersion }}"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
