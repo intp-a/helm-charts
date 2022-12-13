@@ -32,10 +32,10 @@ spec:
 {{- end}}
 {{- if gt (len .Values.persistence) 0 }}
       volumes:
-  {{- range $item := .Values.persistence }}
+{{- range $item := .Values.persistence }}
       - name: {{ $item.volumeName }}
 {{ toYaml $item.volumeSpec | indent 8 }}
-  {{- end }}
+{{- end }}
 {{- end }}
       containers:
       - name: {{ .Release.Name }}  
