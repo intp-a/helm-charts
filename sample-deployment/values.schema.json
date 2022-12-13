@@ -2,16 +2,25 @@
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
     "properties": {
-        "fullnameOverride": {
+        "name": {
             "type": "string",
             "pattern": "^[a-z0-9-_]+$"
         },
         "image": {
             "type": "object",
             "properties": {
+                "externalEnabled": {
+                    "type": "boolean",
+                },
                 "pullPolicy": {
                     "type": "string",
                     "pattern": "^(Always|Never|IfNotPresent)$"
+                },
+                "registry": {
+                    "type": "string",
+                },
+                "name": {
+                    "type": "string",
                 },
                 "tag": {
                     "type": "string"
@@ -109,23 +118,6 @@
             "type": "object",
             "properties": {
                 "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "servicejnlp": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "port": {
-                    "type": "integer"
-                },
-                "targetPort": {
-                    "type": "integer"
-                },
-                "type": {
                     "type": "string"
                 }
             }

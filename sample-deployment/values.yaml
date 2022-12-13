@@ -1,11 +1,12 @@
 isOCP: false
 name: openjdk-11-app
 version: v0.0.1
-externalImage:
-  enabled: true
+image:
+  externalEnabled: true
   registry: docker.io
-  imageName: jenkins/jenkins
+  name: jenkins/jenkins
   tag: latest
+  pullPolicy: Always
 
 replicaCount: 1
 deployStrategy: Recreate
@@ -19,9 +20,6 @@ serviceAccount:
 #  name: "jenkins"
 
 ports:
-  - containerPort: 8778
-    name: jolokia
-    protocol: TCP
   - containerPort: 8080
     name: http
     protocol: TCP
@@ -30,7 +28,7 @@ service:
   type: ClusterIP
   port: 80
   targetPort: 8080
-  name: web
+  name: http
 
 persistence:
   ## @param persistence.enabled Enable persistence using Persistent Volume Claims

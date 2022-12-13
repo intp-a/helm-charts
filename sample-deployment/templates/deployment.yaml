@@ -36,8 +36,8 @@ spec:
         env:
 {{ toYaml .Values.env | indent 8 }}
 {{- end }}
-{{- if .Values.externalImage.enabled }}
-        image: {{ .Values.externalImage.registry }}/{{ .Values.externalImage.imageName }}:{{ .Values.externalImage.tag }}
+{{- if .Values.image.externalEnabled }}
+        image: {{ .Values.c.registry }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
 {{- else }}
         image: {{ .Release.Name }}
 {{- end }}
@@ -49,7 +49,7 @@ spec:
         ports:
 {{ toYaml .Values.ports | indent 8 }}
       terminationGracePeriodSeconds: 75
-{{- if and (.Values.isOCP) (eq .Values.externalImage.enabled "false") }}
+{{- if and (.Values.isOCP) (eq .Values.image.externalEnabled "false") }}
   triggers:
   - imageChangeParams:
       automatic: true
