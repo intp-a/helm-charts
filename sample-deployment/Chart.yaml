@@ -1,10 +1,7 @@
-apiVersion: v2
-name: openjdk-11-app
-description: Openjdk 11 Application Deploy To  Redhat Kubernetes Environment.
+apiVersion: v3
+name: sample-deployment
+description: sample deployment to make spec of deployment from values.yaml
 type: application
 version: 0.0.1
-appVersion: "0.0.1"
-keywords:
-- openjdk
-- java11
-- redhat
+appVersion: "v0.0.1"
+
