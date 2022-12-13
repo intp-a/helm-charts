@@ -62,6 +62,7 @@ resources:
 probes:
   livenessProbeEnabled: false
   readinessProbeEnabled: false
+#  livenessProbe:
 #    failureThreshold: 2
 #    httpGet:
 #      path: /login
