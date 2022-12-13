@@ -8,21 +8,21 @@ kind: Deployment
 metadata:
   labels:
     app: {{ .Release.Name }}
-    version: {{ .Chart.Appversion }}
-  name: {{ .Release.Name }}-{{ .Chart.Appversion }}
+    version: {{ .Chart.appVersion }}
+  name: {{ .Release.Name }}-{{ .Chart.appVersion }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      deploymentConfig: {{ .Release.Name }}-{{ .Chart.Appversion }} 
+      deploymentConfig: {{ .Release.Name }}-{{ .Chart.appVersion }} 
   strategy:
     type: {{ .Values.deployStrategy }}
   template:
     metadata:
       labels:
         app: {{ .Release.Name }}
-        version: {{ .Chart.Appversion }}
-        deploymentConfig: {{ .Release.Name }}-{{ .Chart.Appversion }}
+        version: {{ .Chart.appVersion }}
+        deploymentConfig: {{ .Release.Name }}-{{ .Chart.appVersion }}
       name: {{ .Release.Name }}
     spec:
 {{- if .Values.serviceAccount.name }}
@@ -55,7 +55,7 @@ spec:
       - {{ .Release.Name }}
       from:
         kind: ImageStreamTag
-        name: {{ .Release.Name }}:{{ .Chart.Appversion }}
+        name: {{ .Release.Name }}:{{ .Chart.appVersion }}
     type: ImageChange
   - type: ConfigChange
 {{ end }}
