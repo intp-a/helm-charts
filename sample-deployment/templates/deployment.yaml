@@ -1,4 +1,4 @@
-{{- if .Values.isOCP }}
+{{- if .Values.useDeploymentConfig }}
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 {{- else }}
@@ -43,10 +43,10 @@ spec:
         env:
 {{ toYaml .Values.env | indent 8 }}
 {{- end }}
-{{- if .Values.image.externalEnabled }}
+{{- if .Values.image.isExternal }}
         image: {{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
 {{- else }}
-        image: {{ .Release.Name }}
+        image: {{ .Release.Name }}:{{ .Values.image.tag }}
 {{- end }}
         imagePullPolicy: Always
 {{- if .Values.resources }}
@@ -71,7 +71,7 @@ spec:
 {{ toYaml .Values.probes.readinessProbe | indent 10 }}
 {{- end }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
-{{- if and (.Values.isOCP) (eq .Values.image.externalEnabled "false") }}
+{{- if and (.Values.useDeploymentConfig) (eq .Values.image.isExternal "false") }}
   triggers:
   - imageChangeParams:
       automatic: true

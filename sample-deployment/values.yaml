@@ -1,7 +1,7 @@
-isOCP: false
+useDeploymentConfig: false
 name: openjdk-11-app
 image:
-  externalEnabled: true
+  isExternal: true
   registry: docker.io
   name: jenkins/jenkins
   tag: latest
