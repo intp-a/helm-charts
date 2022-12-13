@@ -59,8 +59,9 @@ resources:
     cpu: 100m
     memory: 128Mi
 
-#probes:
-#  livenessProbe:
+probes:
+  livenessProbeEnabled: false
+  readinessProbeEnabled: false
 #    failureThreshold: 2
 #    httpGet:
 #      path: /login
