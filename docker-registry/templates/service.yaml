@@ -9,7 +9,6 @@ metadata:
   name: "{{ .Release.Name }}-svc"
 spec:
   ports:
-  - port: 8080
-    targetPort: 8080
+{{ toYaml .Values.servicePorts | indent 2 }}
   selector:
     app: {{ .Release.Name }}

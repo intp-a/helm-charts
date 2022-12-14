@@ -23,11 +23,11 @@ ports:
     name: tcp
     protocol: TCP
           
-service:
-  type: ClusterIP
-  port: 5000
-  targetPort: 5000
-  name: tcp
+servicePorts:
+  - type: ClusterIP
+    port: 5000
+    targetPort: 5000
+    name: tcp
 
 persistence:
   - volumeName: tmp-hostpath
