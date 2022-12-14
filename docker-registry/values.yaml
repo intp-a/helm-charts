@@ -23,11 +23,12 @@ ports:
     name: tcp
     protocol: TCP
           
-servicePorts:
-  - type: ClusterIP
-    port: 5000
-    targetPort: 5000
-    name: tcp
+service:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http
 
 persistence:
   - volumeName: tmp-hostpath

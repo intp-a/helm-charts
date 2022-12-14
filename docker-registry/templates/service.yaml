@@ -8,7 +8,8 @@ metadata:
     version: {{ .Chart.AppVersion | quote }}
   name: "{{ .Release.Name }}-svc"
 spec:
+  type: {{ .Values.service.type }}
   ports:
-{{ toYaml .Values.servicePorts | indent 2 }}
+{{ toYaml .Values.service.ports | indent 2 }}
   selector:
     app: {{ .Release.Name }}

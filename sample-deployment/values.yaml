@@ -24,11 +24,12 @@ ports:
     name: http
     protocol: TCP
           
-servicePorts:
-  - type: ClusterIP
-    port: 8080
-    targetPort: 8080
-    name: http
+service:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http
 
 persistence:
   - volumeName: tmp-hostpath
