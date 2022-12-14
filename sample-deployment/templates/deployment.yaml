@@ -48,7 +48,7 @@ spec:
 {{- else }}
         image: {{ .Release.Name }}:{{ .Values.image.tag }}
 {{- end }}
-        imagePullPolicy: Always
+        imagePullPolicy: {{ default "Always" .Values.image.pullPolicy }}
 {{- if .Values.resources }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
