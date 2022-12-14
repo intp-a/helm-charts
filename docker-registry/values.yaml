@@ -73,6 +73,7 @@ probes:
 #    timeoutSeconds: 240
 
 ssl:
+  generateTLS: true
 #  defaultCN: example.com
 #  defaultIPList: nil
 #  defaultSANList: nil
