@@ -77,5 +77,5 @@ ssl:
 #  defaultCN: example.com
 #  defaultIPList: nil
 #  defaultSANList: nil
-  caLifespan: 3650
+  caLifespan: 36500
   tlsLifespan: 3650
