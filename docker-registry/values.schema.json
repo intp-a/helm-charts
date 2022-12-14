@@ -6,6 +6,20 @@
             "type": "string",
             "pattern": "^[a-z0-9-_]+$"
         },
+        "ssl": {
+            "type": "object",
+            "properties": {
+                "generateTLS": {
+                    "type": "boolean"
+                },
+                "caLifespan": {
+                    "type": "integer"
+                },
+                "tlsLifespan": {
+                    "type": "integer"
+                }
+            }
+        },
         "image": {
             "type": "object",
             "properties": {
