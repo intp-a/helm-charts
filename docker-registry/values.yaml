@@ -79,5 +79,7 @@ ssl:
 #  defaultIPList: nil
   defaultSANList:
     - "private-registry-svc.default.svc.cluster.local"
+    - "private-registry-svc.default.svc.cluster.local:5000"
+    - "*.default.svc.cluster.local"
   caLifespan: 36500
   tlsLifespan: 3650
