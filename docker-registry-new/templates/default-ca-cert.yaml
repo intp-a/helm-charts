@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ .Release.Namespace }}-ca-certs
+  name: {{ .Release.Namespace }}-ca-cert
   labels:
     chart: {{ .Chart.Name }}
   annotations:
