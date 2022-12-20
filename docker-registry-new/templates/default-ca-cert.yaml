@@ -6,7 +6,7 @@ metadata:
   labels:
     chart: {{ .Chart.Name }}
   annotations:
-    helm.sh/hook": pre-install
+    "helm.sh/hook": pre-install
 type: Opaque
 data:
   {{- $ca := genCA "default-ca" (int .Values.ssl.caLifespan) }}
