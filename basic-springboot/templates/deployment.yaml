@@ -1,0 +1,63 @@
+{{- if .Values.useDeploymentConfig }}
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+{{- else }}
+apiVersion: apps/v1
+kind: Deployment
+{{- end }}
+metadata:
+  labels:
+    app: {{ .Release.Name }}
+    version: {{ .Chart.AppVersion | quote }}
+  name: "{{ .Release.Name }}-{{ .Chart.AppVersion }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  strategy:
+    type: {{ .Values.deployStrategy }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        version: {{ .Chart.AppVersion }}
+        deploymentConfig: {{ .Release.Name }}-{{ .Chart.AppVersion }}
+      name: {{ .Release.Name }}
+    spec:
+{{- if .Values.serviceAccount.change }}
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+{{- else }}
+      serviceAccountName: default
+{{- end}}
+{{- if gt (len .Values.persistence) 0 }}
+      volumes:
+{{- range $item := .Values.persistence }}
+      - name: {{ $item.volumeName }}
+{{ toYaml $item.volumeSpec | indent 8 }}
+{{- end }}
+{{- end }}
+      containers:
+      - name: {{ .Release.Name }}  
+{{- if .Values.env }}        
+        env:
+{{ toYaml .Values.env | indent 8 }}   
+{{- end }}
+        image: "{{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Chart.AppVersion }}"
+        imagePullPolicy: Always
+{{- if .Values.resources }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+{{- end }}
+{{- if gt (len .Values.persistence) 0 }}
+        volumeMounts:
+  {{- range $item := .Values.persistence }}
+        - name: {{ $item.volumeName }}
+          mountPath: {{ $item.mountPath }}
+  {{- end }}
+{{- end }}
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}

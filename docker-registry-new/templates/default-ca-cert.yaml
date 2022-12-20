@@ -1,0 +1,15 @@
+{{- if .Values.ssl.generateCA }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Release.Namespace }}-ca-certs
+  labels:
+    chart: {{ .Chart.Name }}
+  annotations:
+    helm.sh/hook": pre-install
+type: Opaque
+data:
+  {{- $ca := genCA "default-ca" (int .Values.ssl.caLifespan) }}
+  ca.crt: {{ $ca.Cert | b64enc }}
+  ca.key: {{ $ca.Key | b64enc }}
+{{- end }}

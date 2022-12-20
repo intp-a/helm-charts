@@ -1,0 +1,50 @@
+useDeploymentConfig: false
+image:
+  registry: private-registry-svc.default.svc.cluster.local:5000
+  name: basic-springboot-276
+  pullPolicy: Always
+
+replicaCount: 1
+deployStrategy: RollingUpdate
+terminationGracePeriodSeconds: 30
+
+#env: 
+#  - name: TZ
+#    value: "Asia/Seoul"
+
+serviceAccount:
+  change: false
+#  name: "jenkins"
+
+ports:
+  - containerPort: 8080
+    name: http
+    protocol: TCP
+          
+service:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http
+
+persistence:
+  - volumeName: tmp-heapdump
+    mountPath: /tmp/heapdump
+    volumeSpec:
+      emptyDir: {}
+#    pvcSpec:
+#      storageClass: manual
+#      annotations: {}
+#      accessModes:
+#        - ReadWriteOnce
+#      size: 8Gi
+
+resources: 
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+

@@ -1,0 +1,85 @@
+#useDeploymentConfig: false
+#name: openjdk-11-app
+image:
+  registry: docker.io
+  name: registry
+  tag: 2.7.1
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+deployStrategy: Recreate
+terminationGracePeriodSeconds: 30
+
+#env: 
+#  - name: TZ
+#    value: "Asia/Seoul"
+
+serviceAccount:
+  change: false
+#  name: "jenkins"
+
+ports:
+  - containerPort: 5000
+    name: tcp
+    protocol: TCP
+          
+service:
+  type: ClusterIP
+  ports:
+    - port: 5000
+      targetPort: 5000
+      name: tcp
+
+persistence:
+  - volumeName: tmp-hostpath
+    mountPath: /tmp/hostPath
+    volumeSpec:
+      hostPath:
+        path: /tmp
+  - volumeName: tmp-emptydir
+    mountPath: /tmp/emptyDir
+    volumeSpec:
+      emptyDir: {}
+
+resources: 
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+probes:
+  livenessProbeEnabled: false
+  readinessProbeEnabled: false
+#  livenessProbe:
+#    failureThreshold: 2
+#    httpGet:
+#      path: /login
+#      port: 8080
+#      scheme: HTTP
+#    initialDelaySeconds: 420
+#    periodSeconds: 360
+#    successThreshold: 1
+#    timeoutSeconds: 240
+#  readinessProbe:
+#    failureThreshold: 3
+#    httpGet:
+#      path: /login
+#      port: 8080
+#      scheme: HTTP
+#    initialDelaySeconds: 3
+#    periodSeconds: 10
+#    successThreshold: 1
+#    timeoutSeconds: 240
+
+ssl:
+  generateTLS: true
+#  defaultCN: example.com
+#  defaultIPList: nil
+  defaultSANList:
+    - "private-registry-svc.default.svc.cluster.local"
+    - "private-registry-svc.default.svc.cluster.local:5000"
+    - "*.default.svc.cluster.local"
+  caLifespan: 36500
+  tlsLifespan: 3650
