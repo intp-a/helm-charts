@@ -2,7 +2,7 @@
 ```
 ## Root CA 추가
 $ apt-get install -y ca-certificates
-$ kubectl get secret private-registry-tls-cert -ojson |jq .data.\"ca.crt\" -r | base64 -d >> /usr/local/share/ca-certificates/custom-ca.crt
+$ kubectl get secret private-registry-certs -ojson |jq .data.\"ca.crt\" -r | base64 -d >> /usr/local/share/ca-certificates/custom-ca.crt
 $ update-ca-certificates
 
 ## 데몬 리로드
@@ -60,7 +60,7 @@ $ ssh node01 "echo ${CUSTOMHOST} >> /etc/hosts"
 ```
 ## Root CA 추가
 apt-get install -y ca-certificates
-kubectl get secret private-registry-tls-cert -ojson |jq .data.\"ca.crt\" -r | base64 -d >> /usr/local/share/ca-certificates/custom-ca.crt
+kubectl get secret private-registry-certs -ojson |jq .data.\"ca.crt\" -r | base64 -d >> /usr/local/share/ca-certificates/custom-ca.crt
 update-ca-certificates
 
 ## 데몬 리로드
