@@ -1,7 +1,7 @@
 useDeploymentConfig: false
 image:
-  registry: private-registry-svc.default.svc.cluster.local:5000
-  name: basic-springboot-276
+  name: private-registry-svc.default.svc.cluster.local:5000/basic-springboot-276
+  tag: v0.0.1
   pullPolicy: Always
 
 replicaCount: 1

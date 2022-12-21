@@ -43,7 +43,7 @@ spec:
         env:
 {{ toYaml .Values.env | indent 8 }}   
 {{- end }}
-        image: "{{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Chart.AppVersion }}"
+        image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
         imagePullPolicy: Always
 {{- if .Values.resources }}
         resources:
