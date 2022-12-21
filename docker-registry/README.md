@@ -31,7 +31,7 @@ $ ssh node01 "echo ${CUSTOMHOST} >> /etc/hosts"
 ```
 ## Root CA 추가
 $ yum install -y ca-certificates
-$ kubectl get secret private-registry-certs -ojson |jq .data.\"ca.crt\" -r | base64 -d >> /etc/pki/ca-trust/source/anchors/custom-ca.crt
+$ kubectl get secret private-registry-tls-cert -ojson |jq .data.\"ca.crt\" -r | base64 -d >> /etc/pki/ca-trust/source/anchors/custom-ca.crt
 $ update-ca-trust
 
 ## 데몬 리로드
